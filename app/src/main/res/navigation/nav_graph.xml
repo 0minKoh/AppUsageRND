@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/greetingFragment">
+
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="io.jasperapps.appusagernd.RegisterFragment"
+        android:label="@string/register"
+        tools:layout="@layout/fragment_register" >
+        <action
+            android:id="@+id/action_registerFragment_to_mainFragment"
+            app:destination="@id/mainFragment"
+            app:popUpTo="@+id/nav_graph"
+            app:popUpToInclusive="false">
+            <argument
+                android:name="email"
+                app:argType="string"/>
+        </action>
+
+        <action
+            android:id="@+id/action_registerFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="io.jasperapps.appusagernd.LoginFragment"
+        android:label="@string/login"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment_to_mainFragment"
+            app:destination="@id/mainFragment"
+            app:popUpTo="@+id/nav_graph"
+            app:popUpToInclusive="false">
+            <argument
+                android:name="email"
+                app:argType="string"/>
+        </action>
+    </fragment>
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="io.jasperapps.appusagernd.MainFragment"
+        android:label="fragment_main"
+        tools:layout="@layout/fragment_main">
+        <argument
+            android:name="email"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_mainFragment_toRegisterFragment"
+            app:destination="@id/registerFragment"
+            app:popUpTo="@+id/nav_graph"
+            app:popUpToInclusive="false" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/greetingFragment"
+        android:name="io.jasperapps.appusagernd.GreetingFragment"
+        android:label="fragment_greeting"
+        tools:layout="@layout/fragment_greeting">
+        <action
+            android:id="@+id/action_greetingFragment_toRegisterFragment"
+            app:destination="@+id/registerFragment"
+            app:popUpTo="@id/nav_graph"
+            app:popUpToInclusive="false" />
+
+        <action
+            android:id="@+id/action_greetingFragment_toMainFragment"
+            app:destination="@id/mainFragment"
+            app:popUpTo="@+id/nav_graph"
+            app:popUpToInclusive="false">
+            <argument
+                android:name="email"
+                app:argType="string"/>
+        </action>
+    </fragment>
+</navigation>

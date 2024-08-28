@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">AppUsage R&amp;D</string>
+    <string name="account_register">계정 생성</string>
+    <string name="account_login">로그인</string>
+    <string name="male_name">남성</string>
+    <string name="female_name">여성</string>
+    <string name="register">가입하기</string>
+    <string name="login">로그인</string>
+    <string name="logout">로그아웃</string>
+    <string name="email_name">이메일</string>
+    <string name="password_name">비밀번호</string>
+    <string name="age_name">나이</string>
+    <string name="main_text">안녕하세요, %s</string>
+    <string name="registration_failed_message">가입 실패</string>
+    <string name="login_failed_message">로그인 실패</string>
+    <string name="notification_login_message">잘못된  이메일  또는  비밀번호입니다. 다시 시도해 주세요.</string>
+    <string name="notification_register_message">잘못된 데이터입니다. 다시 시도해 주세요.</string>
+    <string name="log_in_button">로그인</string>
+    <string name="log_in_message">이미 계정이 있나요?</string>
+    <string name="progress_message">로딩 중입니다, 잠시만 기다려 주세요</string>
+    <string name="permission_not_granted">앱 사용 권한이 거부되었습니다. 확인을 눌러 앱 사용 권한을 허용해주세요.</string>
+    <string name="notification_title">AppUsage 연구개발 알림</string>
+    <string name="notification_foreground_service">AppUsage 연구개발 서비스</string>
+    <string name="notification_message">연구개발은 백그라운드에서 작동합니다</string>
+    <string name="notification_denied">알림 권한 거부됨</string>
+    <string name="notification_denied_description">알림을 허용해주세요.</string>
+    <string name="go_to_setting">확인</string>
+    <string name="notification_description">당신은 %s앱을 %s분 사용하셨습니다. 휴식을 취하시기를 권장드립니다.</string>
+    <string name="timed_notification_channel_name">정해진 시간 알림</string>
+    <string name="foreground_service_chanel_name">백그라운드 서비스</string>
+    <string name="health_service_not_available">건강 서비스 사용 불가</string>
+    <string name="health_service_info">Health Connect에 연결할 수 없습니다.</string>
+    <string name="health_date_not_available">모든앱 기능을 사용하려면 Health Connect 애플리케이션을 다운로드해야 합니다.</string>
+    <string name="greeting">안녕하세요,
+한양대학교 경영대학에서 빅데이터로 소비자 행동을 연구하고 있는 임보람 교수입니다.
+저희 연구실에서는 소비자들의 스마트폰 이용행태를 파악하여, 스마트폰 사용이 라이프스타일과 건강한 습관
+형성에 미치는 영향을 조사하고자 합니다. 이 연구를 위하여, 저희는 해당 어플리케이션을 통해 귀하 스마트폰의
+앱들 사용시간을 기록하고 데이터화하게 됩니다. 그렇게 모아진 데이터는 학문적 연구외에 어떤 목적으로도
+사용되지 않으며, 그 어떤 제 3 자와 공유되지 않습니다.
+저희는 귀하를 식별할 수 있는 정보를 수집하는 것은 불가능 하며, 스마트폰 사용시간만을 기록할 뿐, 어떤 식의
+구체적인 앱 활동은 저희가 추적이 불가능 합니다.  따라서, 이 어플리케이션의 설치로 인한 어떤식의 위험은
+존재하지 않으며, 보안성과 안정성은 앱 보안 전문가들을 통해 철저한 검증을 거쳤습니다.
+&lt;br />&lt;br />
+언제든 앱을 사용하지 원하지 않을 경우 자유롭게 앱 삭제가 가능하며, 앱을 설치 하고 2달여의 연구기간이
+마칠때까지 앱을 삭제하지 않은, 참여자들에 한해 스타벅스 무료 아메리카노 쿠폰이 제공됩니다.
+&lt;br />&lt;br />&lt;br />&lt;br />
+연구 책임자: 한양대학교 경영대학 경영학과 조교수 임보람
+    </string>
+</resources>

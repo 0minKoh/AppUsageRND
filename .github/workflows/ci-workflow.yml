@@ -1,0 +1,19 @@
+name: Code Checks
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/ci-workflow.yml'
+      - '**.kt'
+      - '**.kts'
+      - '**.gradle'
+      - '**.xml'
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout repo
+        uses: actions/checkout@v3
+      - name: ktlint check
+        run: ./gradlew ktlintCheck

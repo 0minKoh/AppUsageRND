@@ -1,0 +1,56 @@
+<resources>
+    <string name="app_name">AppUsage R&amp;D</string>
+    <string name="account_register">Create account</string>
+    <string name="account_login">Sign In</string>
+    <string name="male_name">Male</string>
+    <string name="female_name">Female</string>
+    <string name="register">Sign Up</string>
+    <string name="login">Sign In</string>
+    <string name="logout">Log Out</string>
+    <string name="email_name">Email</string>
+    <string name="password_name">Password</string>
+    <string name="age_name">Age</string>
+    <string name="main_text">Hello, %s</string>
+    <string name="registration_failed_message">Sign Up failed</string>
+    <string name="login_failed_message">Sign In failed</string>
+    <string name="notification_login_message">Invalid email or password. Please try again.</string>
+    <string name="notification_register_message">Invalid data. Please try again.</string>
+    <string name="log_in_button">Sign In</string>
+    <string name="log_in_message">Have an account?</string>
+    <string name="progress_message">Loading, please wait</string>
+    <string name="permission_not_granted">Permission denied. Without app usage permission the app might not work correctly.</string>
+    <string name="notification_title">AppUsage R&amp;D notifier</string>
+    <string name="notification_foreground_service">AppUsage R&amp;D service</string>
+    <string name="notification_message">AppUsage R&amp;D works in background</string>
+    <string name="notification_description">You have been using %s app for %s minutes. We recommend you to take a break</string>
+    <string name="notification_denied">Notification Permission denied</string>
+    <string name="notification_denied_description">We will not be able to send you notifications about your activity.</string>
+    <string name="go_to_setting">Confirm</string>
+    <string name="timed_notification_channel_name">Timed Notifications</string>
+    <string name="foreground_service_chanel_name">Background Service</string>
+    <string name="health_service_not_available">Health service not available</string>
+    <string name="health_service_info">Health Connect permissions not granted. We can not read data</string>
+    <string name="health_date_not_available">For using all app functionality you should download Health Connect application</string>
+    <string name="greeting">Hello,
+I\'m Boram Lim, a professor at Hanyang University\'s School of Business who studies
+consumer behavior using big data. Through this application, my research team will
+study how consumers use their smartphones.
+When you install the mobile app on your smartphone, we will collect data on how
+your apps are being used. The data collected will not be used for any purpose other
+than academic research and will not be shared with any third parties. We do not collect any information that can identify you, so there are no risks associated with
+participating in the study. The security and stability of the app have been thoroughly
+verified by Prof. Lim\'s research team.
+&lt;br />&lt;br />&lt;br />
+Only participants who do not uninstall it by the end of the two-month study period
+will receive a coupon for a free Starbucks coffee.
+&lt;br />&lt;br />&lt;br />
+This study was approved by the Institutional Review Board (IRB) of Hanyang Univer-
+sity, and if you have any questions about the study or experience any risks or dis-
+comfort, please contact the principal investigator below. All responsibility is with
+Prof. Boram Lim\'s laboratory.
+&lt;br />&lt;br />&lt;br />
+Principal Investigator: Bo-Ram Lim, Professor of Marketing, Hanyang University&lt;br />
+Contact: 02-2220-1076
+&lt;br />&lt;br />&lt;br />
+You can find more detailed information about the study through the link below.</string>
+</resources>

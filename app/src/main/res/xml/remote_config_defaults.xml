@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<defaultsMap>
+    <entry>
+        <key>NotificationsEnabled</key>
+        <value>false</value>
+    </entry>
+    <entry>
+        <key>TimeNotification</key>
+        <value>30</value>
+    </entry>
+</defaultsMap>

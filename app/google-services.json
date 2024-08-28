@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "103597203628",
+    "firebase_url": "https://appusagernd-default-rtdb.firebaseio.com",
+    "project_id": "appusagernd",
+    "storage_bucket": "appusagernd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:103597203628:android:72fefae2fd503955203f09",
+        "android_client_info": {
+          "package_name": "io.jasperapps.appusagernd"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "103597203628-4p5qjn7up90jrkt3efkir560m8ssnaik.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDiOJXfPjJSI05gdsLDVGaDqdmaE5qb_V8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "103597203628-4p5qjn7up90jrkt3efkir560m8ssnaik.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

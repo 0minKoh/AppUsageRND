@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/login_screen"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context=".LoginFragment">
+
+    <TextView
+        android:id="@+id/email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/account_login"
+        android:textColor="@color/black"
+        android:layout_marginTop="12dp" />
+
+    <EditText
+        android:id="@+id/input_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:layout_marginTop="12dp"
+        android:inputType="textEmailAddress"
+        android:hint="@string/email_name"
+        android:padding="4dp"
+        android:textSize="14sp"
+        android:background="@drawable/border_style"
+        tools:text="test@gmail.com"/>
+
+
+    <EditText
+        android:id="@+id/input_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:layout_marginTop="12dp"
+        android:padding="4dp"
+        android:inputType="textPassword"
+        android:hint="@string/password_name"
+        android:textSize="14sp"
+        android:background="@drawable/border_style"
+        tools:text="pavlo123"/>
+
+    <Button
+        android:id="@+id/submit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/login"
+        android:textAllCaps="false"/>
+
+    <TextView
+        android:id="@+id/notification"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/red"
+        android:visibility="gone"
+        tools:visibility="visible"
+        android:text="@string/notification_login_message"
+        tools:text="@string/notification_login_message"/>
+
+</LinearLayout>
