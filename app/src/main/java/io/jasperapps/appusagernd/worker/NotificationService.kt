@@ -17,7 +17,6 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import io.jasperapps.appusagernd.Manifest
 import io.jasperapps.appusagernd.R
 import io.jasperapps.appusagernd.database.DataUploader
 import io.jasperapps.appusagernd.helper.NotificationHelper
