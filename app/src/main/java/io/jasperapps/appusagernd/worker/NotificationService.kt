@@ -156,7 +156,7 @@ class NotificationService : Service() {
                 .setSmallIcon(R.drawable.ic_baseline_add_alert_24)
                 .build()
 
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) {
             startForeground(NOTIFICATION_ID, notification)
         } else {
             startForeground(
