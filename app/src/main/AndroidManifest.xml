@@ -40,6 +40,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppUsageRD"
         tools:targetApi="31">
+        <service android:name=".worker.NotificationService"
+            android:foregroundServiceType="mediaPlayback"
+            android:exported="false">
+        </service>
         <activity
             android:name=".MainActivity"
             android:enabled="true"
