@@ -100,11 +100,19 @@ class DataUploader(private val context: Context) {
             }
         }
 
+        // events.forEach {
+        //     if (it.eventType == UsageEvents.Event.MOVE_TO_FOREGROUND) {
+        //         foregroundEvents.add(it)
+        //     }
+        //     if (it.eventType == UsageEvents.Event.MOVE_TO_BACKGROUND) {
+        //         backgroundEvents.add(it)
+        //     }
+        // }
         events.forEach {
-            if (it.eventType == UsageEvents.Event.MOVE_TO_FOREGROUND) {
+            if (it.eventType == UsageEvents.Event.ACTIVITY_RESUMED) {
                 foregroundEvents.add(it)
             }
-            if (it.eventType == UsageEvents.Event.MOVE_TO_BACKGROUND) {
+            if (it.eventType == UsageEvents.Event.ACTIVITY_PAUSED) {
                 backgroundEvents.add(it)
             }
         }
