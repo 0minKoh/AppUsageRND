@@ -73,6 +73,21 @@ class DataUploader(private val context: Context) {
         return result
     }
 
+    // 테스트 코드:: 24시간 동안의 앱 사용 기록 출력
+    fun testGetListOfUsage() {
+        // 24시간의 밀리초 (24 * 60 * 60 * 1000)
+        val map = convertData()
+        println("==== 24시간 동안의 앱 사용 기록 ====")
+        map.forEach({ appUsageList -> appUsageList.value.forEach(
+            { usage ->
+                println("앱 패키지 이름: ${usage.app_name}")
+                println("시작 시간: ${usage.start_time}")
+                println("종료 시간: ${usage.end_time}")
+                println("--------------------------------")
+            }
+        ) })
+    }
+
     // 앱 사용 시간 데이터 GET
     // 핵심 함수
     private fun getAppUsage(): UsageEvents {
@@ -85,13 +100,69 @@ class DataUploader(private val context: Context) {
     }
 
     // 사용한 앱 목록 리스트 GET
+    // private fun getListOfUsage(): List<AppUsage> {
+    //     val usageEvents = getAppUsage()
+    //     val events = mutableListOf<UsageEvents.Event>()
+    //     val foregroundEvents = mutableListOf<UsageEvents.Event>()
+    //     val backgroundEvents = mutableListOf<UsageEvents.Event>()
+    //     val appUsage = mutableListOf<AppUsage>()
+    //
+    //     while (usageEvents.hasNextEvent()) {
+    //         val event = UsageEvents.Event()
+    //         usageEvents.getNextEvent(event)
+    //         if (!isAppSystem(event.packageName) || event.packageName in getWhitelistApps()) {
+    //             events.add(event)
+    //         }
+    //     }
+    //
+    //     // events.forEach {
+    //     //     if (it.eventType == UsageEvents.Event.MOVE_TO_FOREGROUND) {
+    //     //         foregroundEvents.add(it)
+    //     //     }
+    //     //     if (it.eventType == UsageEvents.Event.MOVE_TO_BACKGROUND) {
+    //     //         backgroundEvents.add(it)
+    //     //     }
+    //     // }
+    //     events.forEach {
+    //         if (it.eventType == UsageEvents.Event.ACTIVITY_RESUMED) {
+    //             foregroundEvents.add(it)
+    //         }
+    //         if (it.eventType == UsageEvents.Event.ACTIVITY_PAUSED) {
+    //             backgroundEvents.add(it)
+    //         }
+    //     }
+    //     val foregroundIterator = foregroundEvents.iterator()
+    //     while (foregroundIterator.hasNext()) {
+    //         val backgroundIterator = backgroundEvents.iterator()
+    //         val foreground = foregroundIterator.next()
+    //         while (backgroundIterator.hasNext()) {
+    //             val background = backgroundIterator.next()
+    //             if (foreground.packageName == background.packageName) {
+    //                 appUsage.add(
+    //                     AppUsage(
+    //                         foreground.packageName,
+    //                         timeFormatter.getTimeFromMilliSeconds(foreground.timeStamp),
+    //                         timeFormatter.getTimeFromMilliSeconds(background.timeStamp)
+    //                     )
+    //                 )
+    //                 backgroundIterator.remove()
+    //                 break
+    //             }
+    //         }
+    //         foregroundIterator.remove()
+    //     }
+    //
+    //     foregroundEvents.clear()
+    //     backgroundEvents.clear()
+    //     return appUsage
+    // }
+
     private fun getListOfUsage(): List<AppUsage> {
         val usageEvents = getAppUsage()
         val events = mutableListOf<UsageEvents.Event>()
-        val foregroundEvents = mutableListOf<UsageEvents.Event>()
-        val backgroundEvents = mutableListOf<UsageEvents.Event>()
         val appUsage = mutableListOf<AppUsage>()
 
+        // 이벤트 필터링 및 수집
         while (usageEvents.hasNextEvent()) {
             val event = UsageEvents.Event()
             usageEvents.getNextEvent(event)
@@ -100,47 +171,39 @@ class DataUploader(private val context: Context) {
             }
         }
 
-        // events.forEach {
-        //     if (it.eventType == UsageEvents.Event.MOVE_TO_FOREGROUND) {
-        //         foregroundEvents.add(it)
-        //     }
-        //     if (it.eventType == UsageEvents.Event.MOVE_TO_BACKGROUND) {
-        //         backgroundEvents.add(it)
-        //     }
-        // }
-        events.forEach {
-            if (it.eventType == UsageEvents.Event.ACTIVITY_RESUMED) {
-                foregroundEvents.add(it)
-            }
-            if (it.eventType == UsageEvents.Event.ACTIVITY_PAUSED) {
-                backgroundEvents.add(it)
-            }
-        }
-        val foregroundIterator = foregroundEvents.iterator()
-        while (foregroundIterator.hasNext()) {
-            val backgroundIterator = backgroundEvents.iterator()
-            val foreground = foregroundIterator.next()
-            while (backgroundIterator.hasNext()) {
-                val background = backgroundIterator.next()
-                if (foreground.packageName == background.packageName) {
-                    appUsage.add(
-                        AppUsage(
-                            foreground.packageName,
-                            timeFormatter.getTimeFromMilliSeconds(foreground.timeStamp),
-                            timeFormatter.getTimeFromMilliSeconds(background.timeStamp)
+        // 이벤트를 시간순으로 정렬
+        events.sortBy { it.timeStamp }
+
+        val foregroundEvents = mutableMapOf<String, UsageEvents.Event>()
+
+        // 시간 순서대로 이벤트 매칭
+        events.forEach { event ->
+            when (event.eventType) {
+                UsageEvents.Event.ACTIVITY_RESUMED -> {
+                    // foreground 이벤트는 packageName을 키로 저장
+                    foregroundEvents[event.packageName] = event
+                }
+                UsageEvents.Event.ACTIVITY_PAUSED -> {
+                    // background 이벤트가 발생하면 해당 패키지의 foreground와 매칭
+                    val foreground = foregroundEvents[event.packageName]
+                    if (foreground != null) {
+                        appUsage.add(
+                            AppUsage(
+                                event.packageName,
+                                timeFormatter.getTimeFromMilliSeconds(foreground.timeStamp),
+                                timeFormatter.getTimeFromMilliSeconds(event.timeStamp)
+                            )
                         )
-                    )
-                    backgroundIterator.remove()
-                    break
+                        // 매칭된 foreground 이벤트는 제거
+                        foregroundEvents.remove(event.packageName)
+                    }
                 }
             }
-            foregroundIterator.remove()
         }
 
-        foregroundEvents.clear()
-        backgroundEvents.clear()
         return appUsage
     }
+
 
     // 알림정보(데이터) 업데이트
     fun saveNotification(userId: String, notificationInfo: NotificationInfo) {

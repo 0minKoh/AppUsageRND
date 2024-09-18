@@ -87,7 +87,7 @@ class NotificationService : Service() {
         while (usageEvent.hasNextEvent()) {
             val event = UsageEvents.Event()
             usageEvent.getNextEvent(event)
-            println("hasNextEvent")
+            // println("hasNextEvent")
             if (event.eventType == UsageEvents.Event.ACTIVITY_RESUMED) {
                 foregroundEvents.add(event)
             }

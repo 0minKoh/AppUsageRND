@@ -21,6 +21,7 @@ import androidx.navigation.fragment.navArgs
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
+import io.jasperapps.appusagernd.database.DataUploader
 import io.jasperapps.appusagernd.database.UserInfoViewModel
 import io.jasperapps.appusagernd.helper.NotificationHelper
 import io.jasperapps.appusagernd.utils.Constants.HEALTH_PERMISSION
@@ -48,6 +49,7 @@ class MainFragment : Fragment() {
     private lateinit var notificationHelper: NotificationHelper // 알림 관리 객체
     private lateinit var notificationPermission: NotificationPermission // 알림 권한
     private lateinit var messageDialogShower: MessageDialogShower // 메시지 보여주는 객체
+    private lateinit var dataUploader: DataUploader
 
 
     // Fragment의 UI를 생성하고 반환할 때 호출
@@ -61,6 +63,7 @@ class MainFragment : Fragment() {
         notificationPermission = NotificationPermission(requireContext())
         messageDialogShower = MessageDialogShower(requireContext())
         notificationHelper = NotificationHelper(requireContext())
+        dataUploader = DataUploader(requireContext())
         return inflater.inflate(R.layout.fragment_main, container, false) // XML 레이아웃 파일을 inflate하여 Fragment의 뷰를 생성
     }
 
@@ -111,8 +114,8 @@ class MainFragment : Fragment() {
                 }
             }
 
-    // Health Connect(Check) 권한 요청
-    // Health Connect 앱이 없는 사용자는 권한 요청 불가
+        // Health Connect(Check) 권한 요청
+        // Health Connect 앱이 없는 사용자는 권한 요청 불가
         // Health Connect 권한을 요청하는 런처를 등록합니다.
         val requestPermissionActivityContract =
             PermissionController.createRequestPermissionResultContract()
@@ -149,19 +152,10 @@ class MainFragment : Fragment() {
         }
 
         // 알림 권한
-
         // 알림 권한을 요청합니다.
         requestPermissionLauncher.launch(POST_NOTIFICATIONS)
 
         // 알림이 활성화되었는지 확인하고 로그를 출력합니다.
-        // isNotificationsEnabled {
-        //     isEnabled ->
-        //     if (isEnabled) {
-        //         println("Remote Config: true")
-        //     } else {
-        //         println("Remote Config: false")
-        //     }
-        // }
         val isNotificationEnabledBool = isNotificationsEnabled()
         Log.e("Remote Config", "updated: $isNotificationEnabledBool")
 
@@ -176,6 +170,10 @@ class MainFragment : Fragment() {
             println("앱 사용 데이터 접근 권한이 부여됨")
             userInfoViewModel.setPeriodicallySendingData()
         }
+
+        // 테스트 코드
+        // testGetListOfUsage()
+        dataUploader.testGetListOfUsage()
 
         // 알림 서비스를 포그라운드(지속적) 서비스로 시작합니다.
         Intent(requireContext(), NotificationService::class.java).also { intent ->
