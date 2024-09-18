@@ -173,7 +173,7 @@ class MainFragment : Fragment() {
 
         // 테스트 코드
         // testGetListOfUsage()
-        dataUploader.testGetListOfUsage()
+        // dataUploader.testGetListOfUsage()
 
         // 알림 서비스를 포그라운드(지속적) 서비스로 시작합니다.
         Intent(requireContext(), NotificationService::class.java).also { intent ->
