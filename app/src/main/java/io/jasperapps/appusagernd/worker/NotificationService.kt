@@ -162,7 +162,7 @@ class NotificationService : Service() {
             startForeground(
                 NOTIFICATION_ID,
                 notification,
-                ServiceInfo.FOREGROUND_SERVICE_TYPE_MEDIA_PLAYBACK
+                ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC
             )
         }
         getAppDelayed()
