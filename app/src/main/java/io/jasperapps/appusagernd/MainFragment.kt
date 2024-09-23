@@ -2,10 +2,13 @@ package io.jasperapps.appusagernd
 
 import android.Manifest.permission.POST_NOTIFICATIONS
 import android.app.AlertDialog
+import android.content.Context
 import android.provider.Settings
 import android.net.Uri
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import android.os.PowerManager
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -174,6 +177,22 @@ class MainFragment : Fragment() {
         // 테스트 코드
         // testGetListOfUsage()
         // dataUploader.testGetListOfUsage()
+
+        // 배터리 최적화 해제 요청 코드 추가
+        val powerManager = requireContext().getSystemService(Context.POWER_SERVICE) as PowerManager
+        val packageName = requireContext().packageName
+        if (!powerManager.isIgnoringBatteryOptimizations(packageName)) {
+            AlertDialog.Builder(requireContext())
+                .setMessage("(필수) 백그라운드 작업 허용")
+                .setPositiveButton(getString(R.string.go_to_setting)) { _, _ ->
+                    // 설정 페이지로 이동
+                    val intent = Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS).apply {
+                        data = Uri.parse("package:$packageName")
+                    }
+                    startActivity(intent)
+                }
+                .show()
+        }
 
         // 알림 서비스를 포그라운드(지속적) 서비스로 시작합니다.
         Intent(requireContext(), NotificationService::class.java).also { intent ->

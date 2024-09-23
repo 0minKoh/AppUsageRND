@@ -13,6 +13,7 @@ import android.content.pm.ServiceInfo
 import android.content.res.Configuration
 import android.os.Build
 import android.os.IBinder
+import android.provider.Settings
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.ktx.auth
@@ -78,16 +79,33 @@ class NotificationService : Service() {
     override fun onBind(intent: Intent?): IBinder? = null
 
     private suspend fun getForegroundApp() {
+        // var intent = Intent(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS)
         val userStatsManager =
             getSystemService(AppCompatActivity.USAGE_STATS_SERVICE) as UsageStatsManager
         val usageEvent = userStatsManager.queryEvents(
             System.currentTimeMillis() - 1000 * 60,
             System.currentTimeMillis()
         )
+
+        // Test: StartForeground
+        // if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        //     val notification: Notification =
+        //         Notification.Builder(this, Constants.FOREGROUND_SERVICE_CHANNEL_ID)
+        //             .setContentTitle(getText(R.string.notification_foreground_service))
+        //             .setContentText(getText(R.string.notification_message))
+        //             .setOngoing(true)
+        //             .setCategory(Notification.CATEGORY_SERVICE)
+        //             .setSmallIcon(R.drawable.ic_baseline_add_alert_24)
+        //             .build()
+        //     startForeground(
+        //         NOTIFICATION_ID,
+        //         notification,
+        //         ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC
+        //     )
+        // }
         while (usageEvent.hasNextEvent()) {
             val event = UsageEvents.Event()
             usageEvent.getNextEvent(event)
-            // println("hasNextEvent")
             if (event.eventType == UsageEvents.Event.ACTIVITY_RESUMED) {
                 foregroundEvents.add(event)
             }
