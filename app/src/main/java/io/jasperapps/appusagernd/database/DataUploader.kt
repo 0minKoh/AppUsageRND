@@ -198,6 +198,7 @@ class DataUploader(private val context: Context) {
             val currentApp = listOfUsage[index]
             if (index != listOfUsage.size - 1) {
                 val nextApp = listOfUsage[index + 1]
+                // 만약 겹치는 이벤트가 있다면
                 if (currentApp.end_time == nextApp.start_time && currentApp.app_name == nextApp.app_name) {
                     val unionAppUsage = AppUsage(
                         currentApp.app_name,
@@ -206,10 +207,14 @@ class DataUploader(private val context: Context) {
                     )
                     filteredAppList.add(unionAppUsage)
                     index += 2
-                } else if (currentApp.start_time == currentApp.end_time) {
+                }
+                // 총 사용 시간이 0초인 경우
+                else if (currentApp.start_time == currentApp.end_time) {
                     index++
                     continue
-                } else {
+                }
+                // 정상인 경우
+                else {
                     filteredAppList.add(currentApp)
                     index++
                 }
@@ -218,7 +223,6 @@ class DataUploader(private val context: Context) {
                 index++
             }
         }
-        println("unionAppUsageRocord 함수 실행됨 \n filteredAppList: $filteredAppList")
         return filteredAppList
     }
 
