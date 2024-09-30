@@ -63,7 +63,7 @@ class UserInfoViewModel @Inject constructor(
 
     // 주기적으로 데이터를 전송하는 작업을 설정하는 함수입니다.
     fun setPeriodicallySendingData() {
-        // 현재 시간과 설정된 알림 시간의 차이를 계산합니다.
+        // 다음날 0시에 작업이 수행되도록 설정
         val delayTime = Duration(
             DateTime.now(),
             DateTime.now().withTimeAtStartOfDay().plusHours(Constants.SELF_REMINDER_HOUR)

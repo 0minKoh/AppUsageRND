@@ -63,7 +63,6 @@ class DataUploader(private val context: Context) {
     // 데이터 업로드 성공 여부 반환
     fun upload(userId: String): Boolean {
         val reference = database.getReference(userId)
-        println("userId: $userId")
         val appUsageRef = reference.child(Constants.APP_USAGE_KEY)
         val map = convertData()
         var result = false
@@ -73,89 +72,37 @@ class DataUploader(private val context: Context) {
         return result
     }
 
-    // 테스트 코드:: 24시간 동안의 앱 사용 기록 출력
-    fun testGetListOfUsage() {
-        // 24시간의 밀리초 (24 * 60 * 60 * 1000)
-        val map = convertData()
-        println("==== 24시간 동안의 앱 사용 기록 ====")
-        map.forEach({ appUsageList -> appUsageList.value.forEach(
-            { usage ->
-                println("앱 패키지 이름: ${usage.app_name}")
-                println("시작 시간: ${usage.start_time}")
-                println("종료 시간: ${usage.end_time}")
-                println("--------------------------------")
-            }
-        ) })
-    }
-
     // 앱 사용 시간 데이터 GET
     // 핵심 함수
     private fun getAppUsage(): UsageEvents {
-        val start = System.currentTimeMillis() - 24 * 60 * 60 * 1000
-        val end = System.currentTimeMillis()
+        // val start = System.currentTimeMillis() - 24 * 60 * 60 * 1000
+        // val end = System.currentTimeMillis()
+
+        // 어제의 0시 (시작 시간)
+        val calendarStart = Calendar.getInstance().apply {
+            add(Calendar.DAY_OF_YEAR, -1)  // 하루 전 날짜로 설정
+            set(Calendar.HOUR_OF_DAY, 0)   // 시간을 0시로 설정
+            set(Calendar.MINUTE, 0)        // 분을 0분으로 설정
+            set(Calendar.SECOND, 0)        // 초를 0초로 설정
+            set(Calendar.MILLISECOND, 0)   // 밀리초를 0으로 설정
+        }
+        val start = calendarStart.timeInMillis
+
+        // 어제의 23시 59분 59초 (종료 시간)
+        val calendarEnd = Calendar.getInstance().apply {
+            add(Calendar.DAY_OF_YEAR, -1)  // 하루 전 날짜로 설정
+            set(Calendar.HOUR_OF_DAY, 23)  // 시간을 23시로 설정
+            set(Calendar.MINUTE, 59)       // 분을 59분으로 설정
+            set(Calendar.SECOND, 59)       // 초를 59초로 설정
+            set(Calendar.MILLISECOND, 999) // 밀리초를 999로 설정
+        }
+        val end = calendarEnd.timeInMillis
+
         val userStatsManager =
             context.getSystemService(AppCompatActivity.USAGE_STATS_SERVICE) as UsageStatsManager
         println("getAppUsage 실행됨 ${userStatsManager.queryEvents(start, end)}")
         return userStatsManager.queryEvents(start, end)
     }
-
-    // 사용한 앱 목록 리스트 GET
-    // private fun getListOfUsage(): List<AppUsage> {
-    //     val usageEvents = getAppUsage()
-    //     val events = mutableListOf<UsageEvents.Event>()
-    //     val foregroundEvents = mutableListOf<UsageEvents.Event>()
-    //     val backgroundEvents = mutableListOf<UsageEvents.Event>()
-    //     val appUsage = mutableListOf<AppUsage>()
-    //
-    //     while (usageEvents.hasNextEvent()) {
-    //         val event = UsageEvents.Event()
-    //         usageEvents.getNextEvent(event)
-    //         if (!isAppSystem(event.packageName) || event.packageName in getWhitelistApps()) {
-    //             events.add(event)
-    //         }
-    //     }
-    //
-    //     // events.forEach {
-    //     //     if (it.eventType == UsageEvents.Event.MOVE_TO_FOREGROUND) {
-    //     //         foregroundEvents.add(it)
-    //     //     }
-    //     //     if (it.eventType == UsageEvents.Event.MOVE_TO_BACKGROUND) {
-    //     //         backgroundEvents.add(it)
-    //     //     }
-    //     // }
-    //     events.forEach {
-    //         if (it.eventType == UsageEvents.Event.ACTIVITY_RESUMED) {
-    //             foregroundEvents.add(it)
-    //         }
-    //         if (it.eventType == UsageEvents.Event.ACTIVITY_PAUSED) {
-    //             backgroundEvents.add(it)
-    //         }
-    //     }
-    //     val foregroundIterator = foregroundEvents.iterator()
-    //     while (foregroundIterator.hasNext()) {
-    //         val backgroundIterator = backgroundEvents.iterator()
-    //         val foreground = foregroundIterator.next()
-    //         while (backgroundIterator.hasNext()) {
-    //             val background = backgroundIterator.next()
-    //             if (foreground.packageName == background.packageName) {
-    //                 appUsage.add(
-    //                     AppUsage(
-    //                         foreground.packageName,
-    //                         timeFormatter.getTimeFromMilliSeconds(foreground.timeStamp),
-    //                         timeFormatter.getTimeFromMilliSeconds(background.timeStamp)
-    //                     )
-    //                 )
-    //                 backgroundIterator.remove()
-    //                 break
-    //             }
-    //         }
-    //         foregroundIterator.remove()
-    //     }
-    //
-    //     foregroundEvents.clear()
-    //     backgroundEvents.clear()
-    //     return appUsage
-    // }
 
     private fun getListOfUsage(): List<AppUsage> {
         val usageEvents = getAppUsage()
@@ -218,8 +165,18 @@ class DataUploader(private val context: Context) {
         val appUsageList = getListOfUsage()
         val filteredList = unionAppUsageRecord(appUsageList)
         val map = HashMap<String, List<AppUsage>>()
+
+        // 어제의 0시 (시작 시간)
+        val calendarStart = Calendar.getInstance().apply {
+            add(Calendar.DAY_OF_YEAR, -1)  // 하루 전 날짜로 설정
+            set(Calendar.HOUR_OF_DAY, 0)   // 시간을 0시로 설정
+            set(Calendar.MINUTE, 0)        // 분을 0분으로 설정
+            set(Calendar.SECOND, 0)        // 초를 0초로 설정
+            set(Calendar.MILLISECOND, 0)   // 밀리초를 0으로 설정
+        }
+        val start = calendarStart.timeInMillis
         val date =
-            dateFormatter.getDateFromMilliSeconds(Calendar.getInstance().timeInMillis - 3600 * 1000)
+            dateFormatter.getDateFromMilliSeconds(start)
         map[date] = filteredList
         return map
     }
