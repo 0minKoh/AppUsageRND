@@ -78,7 +78,9 @@ class DataUploader(private val context: Context) {
         // val start = System.currentTimeMillis() - 24 * 60 * 60 * 1000
         // val end = System.currentTimeMillis()
 
-        // 어제의 0시 (시작 시간)
+        //
+
+        // 어제의 0시 (시작 시간)\]{"
         val calendarStart = Calendar.getInstance().apply {
             add(Calendar.DAY_OF_YEAR, -1)  // 하루 전 날짜로 설정
             set(Calendar.HOUR_OF_DAY, 0)   // 시간을 0시로 설정
